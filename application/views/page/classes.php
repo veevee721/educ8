@@ -7,13 +7,13 @@
                   <h4 class="page-title">Dashboard</h4>
                   <div class="quick-link-wrapper w-100 d-md-flex flex-md-wrap">
                     <ul class="quick-links">
-                      <li><a href="<?php echo base_url(); ?>index.php/teacher/class">Classes (<?php 
+                      <li><strong><a>Classes (<?php 
                             $cnt = 0;
                             foreach($class as $row){
                                 $cnt++;
                             }
                             echo $cnt;
-                        ?>)</a></li>
+                        ?>)</a></strong></li>
                       <li><a href="<?php echo base_url(); ?>index.php/teacher/join_class">Join Classes</a></li>
                       <li><a href="<?php echo base_url(); ?>index.php/teacher/archived_class">Archived Classes (<?php 
                             $cnt = 0;

@@ -15,13 +15,13 @@
                             echo $cnt;
                         ?>)</a></li>
                       <li><a href="<?php echo base_url(); ?>index.php/teacher/join_class">Join Classes</a></li>
-                      <li><a href="<?php echo base_url(); ?>index.php/teacher/archived_class">Archived Classes (<?php 
+                      <li><strong><a>Archived Classes (<?php 
                             $cnt = 0;
                             foreach($Aclass as $row){
                                 $cnt++;
                             }
                             echo $cnt;
-                        ?>)</a></li>
+                        ?>)</a></srtong></li>
                     </ul>
                   </div>
                 </div>

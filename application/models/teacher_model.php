@@ -54,6 +54,24 @@ class Teacher_model extends CI_Model {
         );
         $this->db->insert('audit', $data1);
     }
+
+    public function get_class_to_update(){
+        $this->db->where('id', $this->uri->segment(3));
+        $query = $this->db->get('class');
+
+        return $query->result();
+    }
+
+    public function process_update_class($data, $id){
+        $this->db->where('id', $id);
+        $this->db->update('class', $data);
+
+        $data1 = array(
+            'action' => 'Updated Class',
+            'userID' => $this->session->userdata('id')
+        );
+        $this->db->insert('audit', $data1);
+    }
 }
 
 ?>

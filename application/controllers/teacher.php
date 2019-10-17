@@ -114,6 +114,33 @@ class Teacher extends CI_Controller {
 		$this->load->view('load/loadt', $data);
 	}
 
+	public function update_class(){
+		$data = array(
+			'page' => 'update_class',
+			'info' => $this->teacher_model->get_info(),
+			'class' => $this->teacher_model->get_classes(),
+			'Aclass' => $this->teacher_model->get_archived_class(),
+			'Uclass' => $this->teacher_model->get_class_to_update()
+		);
+		$this->load->view('load/loadt', $data);
+	}
+
+	public function process_update_class(){
+		$data = array(
+			'class' => $this->input->post('class')
+		);
+		$this->teacher_model->process_update_class($data, $this->input->post('classID'));
+		$data = array(
+			'page' => 'classes',
+			'info' => $this->teacher_model->get_info(),
+			'class' => $this->teacher_model->get_classes(),
+			'Aclass' => $this->teacher_model->get_archived_class(),
+			'message' => 'Class Successfully Updated',
+			'type' => 'alert alert-success'
+		);
+		$this->load->view('load/loadt', $data);
+	}
+
 	public function logout(){
 		$this->session->sess_destroy();
 		redirect('home');
