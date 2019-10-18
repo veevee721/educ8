@@ -63,7 +63,8 @@ class Home extends CI_Controller {
 				$data = array(
 					'username' => $this->input->post('username'),
 					'password' => md5($this->input->post('password')),
-					'role' => $this->input->post('role')
+					'role' => $this->input->post('role'),
+					'status' => 1
 				);
 				if($this->input->post('role') == 2){
 					$data1 = array(
@@ -73,7 +74,8 @@ class Home extends CI_Controller {
 						'gender' => $this->input->post('gender'),
 						'grade' => $this->input->post('grade'),
 						'bdate' => $this->input->post('bdate'),
-						'email' => $this->input->post('email')
+						'email' => $this->input->post('email'),
+						
 					);
 					$this->home_model->add_student($data1);
 				}else{
@@ -83,7 +85,8 @@ class Home extends CI_Controller {
 						'lname' => $this->input->post('lname'),
 						'gender' => $this->input->post('gender'),
 						'bdate' => $this->input->post('bdate'),
-						'email' => $this->input->post('email')
+						'email' => $this->input->post('email'),
+						
 					);
 					$this->home_model->add_teacher($data1);
 				}

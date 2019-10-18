@@ -230,7 +230,7 @@
                           <div class="form-group row">
                             <label class="col-sm-3 col-form-label">Date of Birth</label>
                             <div class="col-sm-9">
-                              <input class="form-control" placeholder="dd/mm/yyyy" tpye="date" required />
+                              <input class="form-control" placeholder="dd/mm/yyyy" type="date" name='bdate' required />
                             </div>
                           </div>
                         </div>
