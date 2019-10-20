@@ -42,21 +42,7 @@
         </div>
         <div class="navbar-menu-wrapper d-flex align-items-center" style="background: #49BEB7">
 		<ul class="navbar-nav">
-            <li class="nav-item font-weight-semibold d-none d-lg-block">
-				
-					<a href="<?php echo base_url(); ?>" style="color:#000;">Dashboard</a>
-				
-			</li>
-            <li class="nav-item font-weight-semibold d-none d-lg-block">
-				
-					<a href="<?php echo base_url(); ?>" style="color:#000;">Classes</a>
-				
-			</li>
-			<li class="nav-item font-weight-semibold d-none d-lg-block">
-				
-					<a href="<?php echo base_url(); ?>" style="color:#000;">Grades</a>
-				
-			</li>
+            
           </ul>
          
           <ul class="navbar-nav ml-auto">

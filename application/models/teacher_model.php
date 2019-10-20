@@ -72,6 +72,13 @@ class Teacher_model extends CI_Model {
         );
         $this->db->insert('audit', $data1);
     }
+
+    public function get_active_class($id){
+        $this->db->where('id', $id);
+        $query = $this->db->get('class');
+
+        return $query->result();
+    }
 }
 
 ?>

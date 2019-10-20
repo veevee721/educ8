@@ -141,6 +141,17 @@ class Teacher extends CI_Controller {
 		$this->load->view('load/loadt', $data);
 	}
 
+	public function classes(){
+		$data = array(
+			'page' => 'active_class',
+			'info' => $this->teacher_model->get_info(),
+			'class' => $this->teacher_model->get_classes(),
+			'Aclass' => $this->teacher_model->get_active_class($this->uri->segment(3))
+		);
+
+		$this->load->view('load/loadt', $data);
+	}
+
 	public function logout(){
 		$this->session->sess_destroy();
 		redirect('home');
