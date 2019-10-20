@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Oct 17, 2019 at 09:41 AM
+-- Generation Time: Oct 20, 2019 at 05:39 AM
 -- Server version: 10.4.6-MariaDB
 -- PHP Version: 7.3.9
 
@@ -45,7 +45,11 @@ INSERT INTO `audit` (`id`, `userID`, `action`, `date`) VALUES
 (3, 1, 'Archived Class', '2019-10-17 15:03:08'),
 (4, 1, 'Restored Class', '2019-10-17 15:12:49'),
 (5, 1, 'Archived Class', '2019-10-17 15:12:55'),
-(6, 1, 'Restored Class', '2019-10-17 15:15:35');
+(6, 1, 'Restored Class', '2019-10-17 15:15:35'),
+(7, 4, 'Joined to a Class', '2019-10-18 10:17:10'),
+(8, 4, 'Left a Class', '2019-10-18 10:28:14'),
+(9, 4, 'Left a Class', '2019-10-18 10:29:19'),
+(10, 4, 'Rejoined a Class', '2019-10-18 11:22:35');
 
 -- --------------------------------------------------------
 
@@ -72,6 +76,26 @@ INSERT INTO `class` (`id`, `code`, `owner`, `class`, `status`) VALUES
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `member`
+--
+
+CREATE TABLE `member` (
+  `id` int(11) NOT NULL,
+  `classID` int(11) NOT NULL COMMENT 'foreign key from class table',
+  `userID` int(11) NOT NULL COMMENT 'foreign key from user table',
+  `status` int(11) NOT NULL COMMENT '0 - pending, 1 - active, 2 - archive'
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `member`
+--
+
+INSERT INTO `member` (`id`, `classID`, `userID`, `status`) VALUES
+(1, 1, 4, 0);
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `student`
 --
 
@@ -85,6 +109,13 @@ CREATE TABLE `student` (
   `bdate` varchar(10) NOT NULL,
   `grade` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `student`
+--
+
+INSERT INTO `student` (`id`, `userID`, `email`, `fname`, `lname`, `gender`, `bdate`, `grade`) VALUES
+(1, 4, 'student1@gmail.com', 'student', 'one', 1, '2000-03-02', 7);
 
 -- --------------------------------------------------------
 
@@ -129,7 +160,8 @@ CREATE TABLE `user` (
 --
 
 INSERT INTO `user` (`id`, `username`, `password`, `role`, `status`) VALUES
-(1, 'teacher1', '25d55ad283aa400af464c76d713c07ad', 1, 0);
+(1, 'teacher1', '25d55ad283aa400af464c76d713c07ad', 1, 1),
+(4, 'student1', '25d55ad283aa400af464c76d713c07ad', 2, 1);
 
 --
 -- Indexes for dumped tables
@@ -145,6 +177,12 @@ ALTER TABLE `audit`
 -- Indexes for table `class`
 --
 ALTER TABLE `class`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `member`
+--
+ALTER TABLE `member`
   ADD PRIMARY KEY (`id`);
 
 --
@@ -173,7 +211,7 @@ ALTER TABLE `user`
 -- AUTO_INCREMENT for table `audit`
 --
 ALTER TABLE `audit`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
 
 --
 -- AUTO_INCREMENT for table `class`
@@ -182,10 +220,16 @@ ALTER TABLE `class`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
+-- AUTO_INCREMENT for table `member`
+--
+ALTER TABLE `member`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+
+--
 -- AUTO_INCREMENT for table `student`
 --
 ALTER TABLE `student`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT for table `teacher`
@@ -197,7 +241,7 @@ ALTER TABLE `teacher`
 -- AUTO_INCREMENT for table `user`
 --
 ALTER TABLE `user`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
