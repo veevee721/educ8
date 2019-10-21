@@ -8,8 +8,8 @@
                   <div class="quick-link-wrapper w-100 d-md-flex flex-md-wrap">
                     <ul class="quick-links">
                       <li><a href="<?php echo base_url(); ?>index.php/teacher/classes/<?php echo $this->uri->segment(3); ?>">Active Classes</a></li>
-                      <li><strong><a>Members</a></strong></li>
-                      <li><a href="<?php echo base_url(); ?>index.php/teacher/class_lesson/<?php echo $this->uri->segment(3); ?>">Lessons</a></li>
+                      <li><a href="<?php echo base_url(); ?>index.php/teacher/class_members/<?php echo $this->uri->segment(3); ?>">Members</a></li>
+                      <li><strong><a>Lessons</a></strong></li>
                       <li><a href="<?php echo base_url(); ?>index.php/teacher/class_assessment/<?php echo $this->uri->segment(3); ?>">Assessment</a></li>
                       <li><a href="<?php echo base_url(); ?>index.php/teacher/class_scores/<?php echo $this->uri->segment(3); ?>">Scores</a></li>
                     </ul>
@@ -31,8 +31,37 @@
 
                            <h1><?php echo $title->class;?></h1>
                            <h4><?php echo "Class Code: ".$title->code;?></h4>
+                           <hr>
+                           <h5>Add Lesson</h5>
                             <?php
                           }
+                          
+                          $attributes = array(
+                            'class' => 'form-sample'
+                        );
+                        echo form_open('teacher/add_lesson', $attributes);
+                        
+                        ?>
+                        <?php 
+                      if(!empty($this->uri->segment(4))){
+                        if($this->uri->segment(4) == 'ok'){
+                          ?>
+                            <div class='alert alert-success' style='text-align: center;'>
+                              Added a Lesson to the Class
+                            </div>
+                          <?php
+                        }
+                      }
+                    ?>
+                        <div class="form-group">
+                               Lesson Title: 
+                                <input type="text" required class="form-control" placeholder="Enter Lesson Title Here" name="lesson" style="width:50%;">
+                            </div>
+                            <input type="hidden" name="classID" value="<?php echo $this->uri->segment(3); ?>">
+                            <input type="submit" class="btn btn-primary mr-2" value="Add Lesson">
+                        <?php
+                        echo form_close();
+                        
                         ?>
                         
                         
@@ -46,19 +75,19 @@
               <div class="col-md-12 grid-margin">
                 <div class="card">
                   <div class="card-body">
-                    <h3>Class Members</h3>
+                    <h3>List of Lessons</h3>
                     <?php 
                       if(!empty($this->uri->segment(4))){
-                        if($this->uri->segment(4) == 'ok'){
+                        if($this->uri->segment(4) == 'a'){
                           ?>
                             <div class='alert alert-success' style='text-align: center;'>
-                              Student Accepted to the Class
+                              Activated a Lesson in the Class
                             </div>
                           <?php
-                        }elseif($this->uri->segment(4) == 'no'){
+                        }elseif($this->uri->segment(4) == 'b'){
                           ?>
                             <div class='alert alert-danger' style='text-align: center;'>
-                              Student Removed to the Class
+                              Archived a Lesson in the Class
                             </div>
                           <?php
                         }
@@ -68,47 +97,35 @@
                     <table class="table table-striped">
                             <thead>
                                 <tr style="text-align:center;">
-                                    <th>Student ID</th>
-                                    <th>Student Name</th>
-                                    <th>Gender</th>
-                                    <th>Birthdate</th>
+                                    <th>Lesson ID</th>
+                                    <th>Lesson</th>
                                     <th>Status</th>
                                     <th>Action</th>
                                 </tr>
                             </thead>
                             <tbody>
                               <?php 
-                                if(!empty($members)){
+                                if(!empty($lessons)){
                                   
-                                  foreach($members as $row){
+                                  foreach($lessons as $row){
                                     ?>
                                       <tr style="text-align: center;">
                                         <td><?php echo $row->id; ?></td>
-                                        <td><?php echo $row->lname.', '.$row->fname; ?></td>
-                                        <td><?php if($row->gender == 1){
-                                          echo 'Female';
-                                        }else{
-                                          echo 'Male';
-                                        } ?></td>
-                                        <td><?php echo $row->bdate; ?></td>
+                                        <td><?php echo $row->lesson; ?></td>
                                         <td><?php if($row->status == 0){
-                                          echo 'Pending';
-                                        }elseif($row->status == 1){
-                                          echo 'Active';
+                                          echo 'Archived';
                                         }else{
-                                          echo 'Removed';
+                                          echo 'Active';
                                         } ?></td>
                                         <td>
                                         <?php 
                                           if($row->status == 0){
                                             ?>
-                                              <a href="<?php echo base_url(); ?>index.php/teacher/accept_member/<?php echo $this->uri->segment(3); ?>/<?php echo $row->id; ?>">Accept</a>&nbsp;
+                                              <a href="<?php echo base_url(); ?>index.php/teacher/active_lesson/<?php echo $this->uri->segment(3); ?>/<?php echo $row->id; ?>">Activate</a>&nbsp;
                                           <?php
-                                          }
-
-                                          if($row->status != 2){
+                                          }else{
                                             ?>
-                                              <a href="<?php echo base_url(); ?>index.php/teacher/remove_member/<?php echo $this->uri->segment(3); ?>/<?php echo $row->id; ?>">Remove</a>
+                                              <a href="<?php echo base_url(); ?>index.php/teacher/archive_lesson/<?php echo $this->uri->segment(3); ?>/<?php echo $row->id; ?>">Archive</a>
                                         
                                             <?php
                                           }
@@ -122,7 +139,7 @@
                                   
                                   ?>
                                   <tr style='text-align:center;'>
-                                    <td colspan='6'>No Students Enrolled to the Class</td>
+                                    <td colspan='4'>No Lessons Encoded to the Class</td>
                                   </tr>
                                   <?php
                                 }

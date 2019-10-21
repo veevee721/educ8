@@ -112,6 +112,47 @@ class Teacher_model extends CI_Model {
         );
         $this->db->insert('audit', $data1);
     }
+
+    public function get_class_lessons($id){
+        $this->db->where('classID', $id);
+        $query = $this->db->get('lesson');
+
+        return $query->result();
+    }
+
+    public function add_lesson($data){
+        $this->db->insert('lesson', $data);
+
+        $data1 = array(
+            'action' => 'Add Lesson to the Class',
+            'userID' => $this->session->userdata('id')
+        );
+        $this->db->insert('audit', $data1);
+    }
+
+    public function archive_lesson($data, $classID, $id){
+        $this->db->where('classID', $classID);
+        $this->db->where('id', $id);
+        $this->db->update('lesson', $data);
+
+        $data1 = array(
+            'action' => 'Archived a Lesson in the Class',
+            'userID' => $this->session->userdata('id')
+        );
+        $this->db->insert('audit', $data1);
+    }
+
+    public function active_lesson($data, $classID, $id){
+        $this->db->where('classID', $classID);
+        $this->db->where('id', $id);
+        $this->db->update('lesson', $data);
+
+        $data1 = array(
+            'action' => 'Activated a Lesson in the Class',
+            'userID' => $this->session->userdata('id')
+        );
+        $this->db->insert('audit', $data1);
+    }
 }
 
 ?>

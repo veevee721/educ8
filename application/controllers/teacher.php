@@ -57,6 +57,7 @@ class Teacher extends CI_Controller {
 				'status' => 1 
 			);
 			$this->teacher_model->add_class($data);
+			mkdir("resources/".$this->input->post('class'), 0700);
 			$data = array(
 				'page' => 'classes',
 				'info' => $this->teacher_model->get_info(),
@@ -181,6 +182,47 @@ class Teacher extends CI_Controller {
 
 		$this->teacher_model->accept_member($data, $this->uri->segment(3), $this->uri->segment(4));
 		redirect('teacher/class_members/'.$this->uri->segment(3).'/no');
+	}
+
+	public function class_lesson(){
+		$data = array(
+			'page' => 'lessons',
+			'info' => $this->teacher_model->get_info(),
+			'class' => $this->teacher_model->get_classes(),
+			'Aclass' => $this->teacher_model->get_active_class($this->uri->segment(3)),
+			'lessons' => $this->teacher_model->get_class_lessons($this->uri->segment(3)),
+
+		);
+
+		$this->load->view('load/loadt', $data);
+	}
+
+	public function add_lesson(){
+		$data = array(
+			'lesson' => $this->input->post('lesson'),
+			'status' => 1,
+			'classID' => $this->input->post('classID')
+		);
+		$this->teacher_model->add_lesson($data);
+		redirect('teacher/class_lesson/'.$this->input->post('classID').'/ok');
+	}
+
+	public function archive_lesson(){
+		$data = array(
+			'status' => 0
+		);
+
+		$this->teacher_model->archive_lesson($data, $this->uri->segment(3), $this->uri->segment(4));
+		redirect('teacher/class_lesson/'.$this->uri->segment(3).'/b');
+	}
+
+	public function active_lesson(){
+		$data = array(
+			'status' => 1
+		);
+
+		$this->teacher_model->active_lesson($data, $this->uri->segment(3), $this->uri->segment(4));
+		redirect('teacher/class_lesson/'.$this->uri->segment(3).'/a');
 	}
 
 	public function logout(){
