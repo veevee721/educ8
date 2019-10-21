@@ -79,6 +79,39 @@ class Teacher_model extends CI_Model {
 
         return $query->result();
     }
+
+    public function get_class_members($id){
+        $this->db->where('member.classID', $id);
+        $this->db->join('student', 'student.userID = member.userID');
+        $this->db->select('student.userID as id, student.fname as fname, student.lname as lname, student.image as image, student.gender as gender, student.bdate as bdate, member.status as status');
+        $query = $this->db->get('member');
+
+        return $query->result();
+    }
+
+    public function accept_member($data, $classID, $userID){
+        $this->db->where('classID', $classID);
+        $this->db->where('userID', $userID);
+        $this->db->update('member', $data);
+
+        $data1 = array(
+            'action' => 'Accepted a Member of the Class',
+            'userID' => $this->session->userdata('id')
+        );
+        $this->db->insert('audit', $data1);
+    }
+
+    public function remove_member($data, $classID, $userID){
+        $this->db->where('classID', $classID);
+        $this->db->where('userID', $userID);
+        $this->db->update('member', $data);
+
+        $data1 = array(
+            'action' => 'Removed a Member of the Class',
+            'userID' => $this->session->userdata('id')
+        );
+        $this->db->insert('audit', $data1);
+    }
 }
 
 ?>

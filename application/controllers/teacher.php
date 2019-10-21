@@ -152,6 +152,37 @@ class Teacher extends CI_Controller {
 		$this->load->view('load/loadt', $data);
 	}
 
+	public function class_members(){
+		$data = array(
+			'page' => 'members',
+			'info' => $this->teacher_model->get_info(),
+			'class' => $this->teacher_model->get_classes(),
+			'Aclass' => $this->teacher_model->get_active_class($this->uri->segment(3)),
+			'members' => $this->teacher_model->get_class_members($this->uri->segment(3)),
+
+		);
+
+		$this->load->view('load/loadt', $data);
+	}
+
+	public function accept_member(){
+		$data = array(
+			'status' => 1
+		);
+
+		$this->teacher_model->accept_member($data, $this->uri->segment(3), $this->uri->segment(4));
+		redirect('teacher/class_members/'.$this->uri->segment(3).'/ok');
+	}
+
+	public function remove_member(){
+		$data = array(
+			'status' => 2
+		);
+
+		$this->teacher_model->accept_member($data, $this->uri->segment(3), $this->uri->segment(4));
+		redirect('teacher/class_members/'.$this->uri->segment(3).'/no');
+	}
+
 	public function logout(){
 		$this->session->sess_destroy();
 		redirect('home');
