@@ -1,11 +1,11 @@
 -- phpMyAdmin SQL Dump
--- version 4.8.5
+-- version 4.9.0.1
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Oct 21, 2019 at 01:33 PM
--- Server version: 10.1.38-MariaDB
--- PHP Version: 7.3.3
+-- Generation Time: Oct 22, 2019 at 04:54 AM
+-- Server version: 10.4.6-MariaDB
+-- PHP Version: 7.3.9
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 SET AUTOCOMMIT = 0;
@@ -25,6 +25,19 @@ SET time_zone = "+00:00";
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `assessment`
+--
+
+CREATE TABLE `assessment` (
+  `id` int(11) NOT NULL,
+  `lessonID` int(11) NOT NULL COMMENT 'foreign key from lesson table',
+  `question` text NOT NULL,
+  `status` int(11) NOT NULL COMMENT '0 - archived, 1 - active'
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `audit`
 --
 
@@ -32,7 +45,7 @@ CREATE TABLE `audit` (
   `id` int(11) NOT NULL,
   `userID` int(11) NOT NULL COMMENT 'foreign key from user table',
   `action` text NOT NULL,
-  `date` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
+  `date` datetime NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
@@ -56,7 +69,11 @@ INSERT INTO `audit` (`id`, `userID`, `action`, `date`) VALUES
 (14, 1, 'Archived a Lesson in the Class', '2019-10-21 19:31:37'),
 (15, 1, 'Activated a Lesson in the Class', '2019-10-21 19:32:36'),
 (16, 1, 'Archived a Lesson in the Class', '2019-10-21 19:32:49'),
-(17, 1, 'Activated a Lesson in the Class', '2019-10-21 19:32:54');
+(17, 1, 'Activated a Lesson in the Class', '2019-10-21 19:32:54'),
+(18, 1, 'Added Resources to a Lesson in the Class', '2019-10-22 09:04:38'),
+(19, 1, 'Added Resources to a Lesson in the Class', '2019-10-22 09:08:23'),
+(20, 1, 'Archived a Resource to a Lesson in the Class', '2019-10-22 09:21:42'),
+(21, 1, 'Activated a Resource to a Lesson in the Class', '2019-10-22 09:24:38');
 
 -- --------------------------------------------------------
 
@@ -120,6 +137,29 @@ CREATE TABLE `member` (
 
 INSERT INTO `member` (`id`, `classID`, `userID`, `status`) VALUES
 (1, 1, 4, 0);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `resources`
+--
+
+CREATE TABLE `resources` (
+  `id` int(11) NOT NULL,
+  `lessonID` int(11) NOT NULL COMMENT 'foreign key from lesson table',
+  `file` text NOT NULL,
+  `type` varchar(5) NOT NULL,
+  `status` int(11) NOT NULL COMMENT '0 - archived, 1 - active',
+  `date_added` datetime NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp()
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `resources`
+--
+
+INSERT INTO `resources` (`id`, `lessonID`, `file`, `type`, `status`, `date_added`) VALUES
+(1, 1, 'ztest.pptx', '.pptx', 1, '2019-10-22 09:24:38'),
+(2, 1, 'template.docx', '.docx', 1, '2019-10-22 09:08:23');
 
 -- --------------------------------------------------------
 
@@ -196,6 +236,12 @@ INSERT INTO `user` (`id`, `username`, `password`, `role`, `status`) VALUES
 --
 
 --
+-- Indexes for table `assessment`
+--
+ALTER TABLE `assessment`
+  ADD PRIMARY KEY (`id`);
+
+--
 -- Indexes for table `audit`
 --
 ALTER TABLE `audit`
@@ -211,6 +257,12 @@ ALTER TABLE `class`
 -- Indexes for table `lesson`
 --
 ALTER TABLE `lesson`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `resources`
+--
+ALTER TABLE `resources`
   ADD PRIMARY KEY (`id`);
 
 --
@@ -236,10 +288,16 @@ ALTER TABLE `user`
 --
 
 --
+-- AUTO_INCREMENT for table `assessment`
+--
+ALTER TABLE `assessment`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+
+--
 -- AUTO_INCREMENT for table `audit`
 --
 ALTER TABLE `audit`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=18;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=22;
 
 --
 -- AUTO_INCREMENT for table `class`
@@ -252,6 +310,12 @@ ALTER TABLE `class`
 --
 ALTER TABLE `lesson`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+
+--
+-- AUTO_INCREMENT for table `resources`
+--
+ALTER TABLE `resources`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT for table `student`
