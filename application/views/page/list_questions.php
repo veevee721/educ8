@@ -122,7 +122,7 @@
                                     ?>
                                       <tr style="text-align: center;">
                                         <td><?php echo $row->id; ?></td>
-                                        <td><?php echo $row->question; ?></td>
+                                        <td><a href="<?php echo base_url(); ?>index.php/teacher/choices/<?php echo $this->uri->segment(3); ?>/<?php echo $this->uri->segment(4); ?>/<?php echo $row->id; ?>"><?php echo $row->question; ?></a></td>
                                         <td><?php if($row->status == 0){
                                           echo 'Archived';
                                         }else{
