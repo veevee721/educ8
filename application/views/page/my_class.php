@@ -7,22 +7,18 @@
                   <h4 class="page-title">Dashboard</h4>
                   <div class="quick-link-wrapper w-100 d-md-flex flex-md-wrap">
                     <ul class="quick-links">
-                      <li><strong><a>My Classes (<?php 
+                      <li><a href="<?php echo base_url(); ?>index.php/student/class">Classes (<?php 
                             $cnt = 0;
                             foreach($class as $row){
-                                if($row->member != 2){
-                                  $cnt++;
-                                }
+                                $cnt++;
                             }
                             echo $cnt;
-                        ?>)</a></strong></li>
-                      <li><a href="<?php echo base_url(); ?>index.php/student/archived_class">My Archived Classes (<?php 
+                        ?>)</a></li>
+                      <li><a href="<?php echo base_url(); ?>index.php/student/join_class">Join Classes</a></li>
+                      <li><a href="<?php echo base_url(); ?>index.php/student/archived_class">Archived Classes (<?php 
                             $cnt = 0;
                             foreach($Aclass as $row){
-                                if($row->member == 2)
-                                {
-                                  $cnt++;
-                                }
+                                $cnt++;
                             }
                             echo $cnt;
                         ?>)</a></li>
@@ -38,7 +34,7 @@
                 <div class="card">
                   <div class="card-body">
                     <center>
-                        <h1>Join Class</h1>
+                        <h1>Add Class</h1>
                         
                         <?php
                             if(!empty($message)){
@@ -54,13 +50,13 @@
                             $attributes = array(
                                 'class' => 'form-sample'
                             );
-                            echo form_open('student/process_join_class', $attributes);
+                            echo form_open('teacher/add_class', $attributes);
                             ?>
                             <div class="form-group">
-                                Class Code: 
-                                <input type="text" class="form-control" placeholder="Enter Class Name Here" name="code" style="width:50%;">
+                                Class Name: 
+                                <input type="text" class="form-control" placeholder="Enter Class Name Here" name="class" style="width:50%;">
                             </div>
-                            <input type="submit" class="btn btn-primary mr-2" value="Join Class">
+                            <input type="submit" class="btn btn-success mr-2">
 
                             <?php
                             echo form_close();
@@ -79,9 +75,9 @@
                     <table class="table table-striped">
                             <thead>
                                 <tr style="text-align:center;">
+                                    <th>Class ID</th>
                                     <th>Class Code</th>
                                     <th>Class Name</th>
-                                    <th>Status</th>
                                     <th>Action</th>
                                 </tr>
                             </thead>
@@ -89,35 +85,21 @@
                                 <?php 
                                     if(!empty($class)){
                                         foreach($class as $Crow){
-                                          if($Crow->member != 2){
                                             ?>
                                                 <tr style="text-align:center;">
+                                                    <td><?php echo $Crow->id; ?></td>
                                                     <td><?php echo $Crow->code; ?></td>
                                                     <td><?php echo $Crow->class; ?></td>
-                                                    <td><?php 
-                                                      if($Crow->member == 0){
-                                                        echo 'Pending';
-                                                      }elseif($Crow->member == 1){
-                                                        echo 'Member';
-                                                      }
-                                                    ?></td>
-                                                    <td><a href="<?php echo base_url(); ?>index.php/student/leave_class/<?php echo $Crow->id; ?>">Leave</a>&nbsp;
-                                                    
+                                                    <td><a href="<?php echo base_url(); ?>index.php/teacher/archive_class/<?php echo $Crow->id; ?>">Archive</a>&nbsp;
+                                                    <a href="<?php echo base_url(); ?>index.php/teacher/update_class/<?php echo $Crow->id; ?>">Update</a>
                                                     </td>
                                                 </tr>
                                             <?php
-                                          }else{
-                                             ?>
-                                        <tr style="text-align:center;">
-                                            <td colspan="5">No Classes Joined</td>
-                                        </tr>
-                                        <?php
-                                          }
                                         }
                                     }else{
                                         ?>
                                         <tr style="text-align:center;">
-                                            <td colspan="5">No Classes Joined</td>
+                                            <td colspan="4">No Classes Created</td>
                                         </tr>
                                         <?php
                                     }

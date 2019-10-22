@@ -120,6 +120,13 @@ class Teacher_model extends CI_Model {
         return $query->result();
     }
 
+    public function get_class_lesson($id){
+        $this->db->where('id', $id);
+        $query = $this->db->get('lesson');
+
+        return $query->result();
+    }
+
     public function add_lesson($data){
         $this->db->insert('lesson', $data);
 
@@ -152,6 +159,64 @@ class Teacher_model extends CI_Model {
             'userID' => $this->session->userdata('id')
         );
         $this->db->insert('audit', $data1);
+    }
+
+    public function get_lesson_resources($lessonID){
+        $this->db->where('lessonID', $lessonID);
+        $query = $this->db->get('resources');
+
+        return $query->result();
+    }
+
+    public function get_class_name($classID){
+        $this->db->where('id', $classID);
+        $query = $this->db->get('class');
+        $title = '';
+
+        foreach($query->result() as $row){
+            $title = $row->class;
+        }
+
+        return $title;
+    }
+
+    public function add_resources($data){
+        $this->db->insert('resources', $data);
+
+        $data1 = array(
+            'action' => 'Added Resources to a Lesson in the Class',
+            'userID' => $this->session->userdata('id')
+        );
+        $this->db->insert('audit', $data1);
+    }
+
+    public function archive_resource($data, $id){
+        $this->db->where('id', $id);
+        $this->db->update('resources', $data);
+
+        $data1 = array(
+            'action' => 'Archived a Resource to a Lesson in the Class',
+            'userID' => $this->session->userdata('id')
+        );
+        $this->db->insert('audit', $data1);
+    }
+    
+    public function activate_resource($data, $id){
+        $this->db->where('id', $id);
+        $this->db->update('resources', $data);
+
+        $data1 = array(
+            'action' => 'Activated a Resource to a Lesson in the Class',
+            'userID' => $this->session->userdata('id')
+        );
+        $this->db->insert('audit', $data1);
+    }
+
+    public function get_questions($lessonID){
+        $this->db->where('lessonID', $lessonID);
+        $query = $this->db->get('assessment');
+
+        return $query->result();
     }
 }
 
