@@ -15,7 +15,7 @@ class Home_model extends CI_Model {
 
     public function login_process($username, $password){
         $this->db->where('username', $username);
-        $this->db->password('password', $password);
+        $this->db->where('password', $password);
         $query = $this->db->get('user');
         $role = 0;
 
