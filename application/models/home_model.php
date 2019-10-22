@@ -27,7 +27,7 @@ class Home_model extends CI_Model {
             $role = $row->role;
         }
 
-        $this->session->user_data($data);
+        $this->session->set_userdata($data);
 
         return $role;
     }
