@@ -339,7 +339,50 @@ class Teacher extends CI_Controller {
 		redirect('teacher/assessment_lesson/'.$this->uri->segment(3).'/'.$this->uri->segment(4).'/a');
 	}
 
-	
+	public function choices(){
+		$data = array(
+			'page' => 'list_choices',
+			'info' => $this->teacher_model->get_info(),
+			'class' => $this->teacher_model->get_classes(),
+			'Aclass' => $this->teacher_model->get_active_class($this->uri->segment(3)),
+			'lesson' => $this->teacher_model->get_class_lesson($this->uri->segment(4)),
+			'question' => $this->teacher_model->get_question($this->uri->segment(5)),
+			'choices' => $this->teacher_model->get_choices($this->uri->segment(5))
+		);
+
+		$this->load->view('load/loadt', $data);
+	}
+
+	public function add_choices(){
+		$data = array(
+			'choice' => $this->input->post('choice'),
+			'assessmentID' => $this->input->post('assessmentID'),
+			'status' => 1,
+			'correct' => $this->input->post('correct')
+			
+		);
+		$this->teacher_model->add_choices($data);
+		redirect('teacher/choices/'.$this->input->post('classID').'/'.$this->input->post('lessonID').'/'.$this->input->post('assessmentID').'/ok');
+	}
+
+	public function archive_choice(){
+		$data = array(
+			'status' => 0
+		);
+
+		$this->teacher_model->archive_choice($data, $this->uri->segment(6));
+		redirect('teacher/choices/'.$this->uri->segment(3).'/'.$this->uri->segment(4).'/'.$this->uri->segment(5).'/b');
+	}
+
+	public function active_choice(){
+		$data = array(
+			'status' => 1
+		);
+
+		$this->teacher_model->activate_choice($data, $this->uri->segment(6));
+		redirect('teacher/choices/'.$this->uri->segment(3).'/'.$this->uri->segment(4).'/'.$this->uri->segment(5).'/a');
+	}
+
 	public function logout(){
 		$this->session->sess_destroy();
 		redirect('home');

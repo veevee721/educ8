@@ -250,6 +250,56 @@ class Teacher_model extends CI_Model {
         );
         $this->db->insert('audit', $data1);
     }
+
+    public function get_question($assessmentID){
+        $this->db->where('id', $assessmentID);
+        $query = $this->db->get('assessment');
+        $question = '';
+        foreach($query->result() as $row){
+            $question = $row->question;
+        }
+
+        return $question;
+    }
+
+    public function get_choices($assessmentID){
+        $this->db->where('assessmentID', $assessmentID);
+        $query = $this->db->get('choices');
+
+        return $query->result();
+    }
+
+    public function add_choices($data){
+        $this->db->insert('choices', $data);
+
+        $data1 = array(
+            'action' => 'Added Choices to a Assessment Question to a Lesson in the Class',
+            'userID' => $this->session->userdata('id')
+        );
+        $this->db->insert('audit', $data1);
+    }
+
+    public function archive_choice($data, $id){
+        $this->db->where('id', $id);
+        $this->db->update('choices', $data);
+
+        $data1 = array(
+            'action' => 'Archived a Choice for the Assessment to a Lesson in the Class',
+            'userID' => $this->session->userdata('id')
+        );
+        $this->db->insert('audit', $data1);
+    }
+    
+    public function activate_choice($data, $id){
+        $this->db->where('id', $id);
+        $this->db->update('choices', $data);
+
+        $data1 = array(
+            'action' => 'Activated a Choice for the Assessment to a Lesson in the Class',
+            'userID' => $this->session->userdata('id')
+        );
+        $this->db->insert('audit', $data1);
+    }
 }
 
 ?>
