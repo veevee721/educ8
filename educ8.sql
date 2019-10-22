@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Oct 22, 2019 at 04:54 AM
+-- Generation Time: Oct 22, 2019 at 05:18 AM
 -- Server version: 10.4.6-MariaDB
 -- PHP Version: 7.3.9
 
@@ -34,6 +34,13 @@ CREATE TABLE `assessment` (
   `question` text NOT NULL,
   `status` int(11) NOT NULL COMMENT '0 - archived, 1 - active'
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `assessment`
+--
+
+INSERT INTO `assessment` (`id`, `lessonID`, `question`, `status`) VALUES
+(1, 1, '1 + 2', 1);
 
 -- --------------------------------------------------------
 
@@ -73,7 +80,13 @@ INSERT INTO `audit` (`id`, `userID`, `action`, `date`) VALUES
 (18, 1, 'Added Resources to a Lesson in the Class', '2019-10-22 09:04:38'),
 (19, 1, 'Added Resources to a Lesson in the Class', '2019-10-22 09:08:23'),
 (20, 1, 'Archived a Resource to a Lesson in the Class', '2019-10-22 09:21:42'),
-(21, 1, 'Activated a Resource to a Lesson in the Class', '2019-10-22 09:24:38');
+(21, 1, 'Activated a Resource to a Lesson in the Class', '2019-10-22 09:24:38'),
+(22, 1, 'Activated a Resource to a Lesson in the Class', '2019-10-22 11:04:56'),
+(23, 1, 'Activated a Resource to a Lesson in the Class', '2019-10-22 11:07:14'),
+(24, 1, 'Archived a Assessment to a Lesson in the Class', '2019-10-22 11:16:25'),
+(25, 1, 'Activated a Assessment to a Lesson in the Class', '2019-10-22 11:17:22'),
+(26, 1, 'Archived a Assessment to a Lesson in the Class', '2019-10-22 11:17:25'),
+(27, 1, 'Activated a Assessment to a Lesson in the Class', '2019-10-22 11:17:29');
 
 -- --------------------------------------------------------
 
@@ -291,13 +304,13 @@ ALTER TABLE `user`
 -- AUTO_INCREMENT for table `assessment`
 --
 ALTER TABLE `assessment`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT for table `audit`
 --
 ALTER TABLE `audit`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=22;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=28;
 
 --
 -- AUTO_INCREMENT for table `class`

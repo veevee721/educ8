@@ -218,6 +218,38 @@ class Teacher_model extends CI_Model {
 
         return $query->result();
     }
+
+    public function add_question($data){
+        $this->db->insert('assessment', $data);
+
+        $data1 = array(
+            'action' => 'Activated a Resource to a Lesson in the Class',
+            'userID' => $this->session->userdata('id')
+        );
+        $this->db->insert('audit', $data1);
+    }
+
+    public function archive_question($data, $id){
+        $this->db->where('id', $id);
+        $this->db->update('assessment', $data);
+
+        $data1 = array(
+            'action' => 'Archived a Assessment to a Lesson in the Class',
+            'userID' => $this->session->userdata('id')
+        );
+        $this->db->insert('audit', $data1);
+    }
+    
+    public function activate_question($data, $id){
+        $this->db->where('id', $id);
+        $this->db->update('assessment', $data);
+
+        $data1 = array(
+            'action' => 'Activated a Assessment to a Lesson in the Class',
+            'userID' => $this->session->userdata('id')
+        );
+        $this->db->insert('audit', $data1);
+    }
 }
 
 ?>

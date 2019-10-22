@@ -310,6 +310,36 @@ class Teacher extends CI_Controller {
 		$this->load->view('load/loadt', $data);
 	}
 
+	public function process_add_assessment(){
+		$data = array(
+			'question' => $this->input->post('question'),
+			'lessonID' => $this->input->post('lessonID'),
+			'status' => 1
+		);
+		$this->teacher_model->add_question($data);
+
+		redirect('teacher/assessment_lesson/'.$this->input->post('classID').'/'.$this->input->post('lessonID').'/ok');
+	}
+
+	public function archive_question(){
+		$data = array(
+			'status' => 0
+		);
+
+		$this->teacher_model->archive_question($data, $this->uri->segment(5));
+		redirect('teacher/assessment_lesson/'.$this->uri->segment(3).'/'.$this->uri->segment(4).'/b');
+	}
+
+	public function active_question(){
+		$data = array(
+			'status' => 1
+		);
+
+		$this->teacher_model->activate_question($data, $this->uri->segment(5));
+		redirect('teacher/assessment_lesson/'.$this->uri->segment(3).'/'.$this->uri->segment(4).'/a');
+	}
+
+	
 	public function logout(){
 		$this->session->sess_destroy();
 		redirect('home');

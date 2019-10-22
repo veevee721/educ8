@@ -87,7 +87,24 @@
                         echo $title->lesson;
                         
                       }
-                    ?></h2>
+                    ?></h2><?php 
+                    if(!empty($this->uri->segment(5))){
+                      if($this->uri->segment(5) == 'a'){
+                        ?>
+                          <div class='alert alert-success' style='text-align: center;'>
+                            Activated a Question for the Lesson in the Class
+                          </div>
+                        <?php
+                      }elseif($this->uri->segment(5) == 'b'){
+                        ?>
+                          <div class='alert alert-danger' style='text-align: center;'>
+                            Archived a Question for the Lesson in the Class
+                          </div>
+                        <?php
+                      }
+                    }
+                  ?>
+                  
                     <hr>
                     <table class="table table-striped">
                             <thead>
@@ -100,9 +117,8 @@
                             </thead>
                             <tbody>
                               <?php 
-                                if(!empty($resources)){
-                                  
-                                  foreach($resources as $row){
+                                if(!empty($questions)){
+                                  foreach($questions as $row){
                                     ?>
                                       <tr style="text-align: center;">
                                         <td><?php echo $row->id; ?></td>
@@ -131,10 +147,9 @@
                                     <?php
                                   }                                 
                                 }else{
-                                  
                                   ?>
                                   <tr style='text-align:center;'>
-                                    <td colspan='5'>No Resources Available for the Lesson</td>
+                                    <td colspan='5'>No Questions Added for the Question</td>
                                   </tr>
                                   <?php
                                 }
