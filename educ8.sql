@@ -1,11 +1,11 @@
 -- phpMyAdmin SQL Dump
--- version 4.9.0.1
+-- version 4.8.5
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Oct 22, 2019 at 05:18 AM
--- Server version: 10.4.6-MariaDB
--- PHP Version: 7.3.9
+-- Generation Time: Oct 22, 2019 at 01:39 PM
+-- Server version: 10.1.38-MariaDB
+-- PHP Version: 7.3.3
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 SET AUTOCOMMIT = 0;
@@ -52,7 +52,7 @@ CREATE TABLE `audit` (
   `id` int(11) NOT NULL,
   `userID` int(11) NOT NULL COMMENT 'foreign key from user table',
   `action` text NOT NULL,
-  `date` datetime NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp()
+  `date` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
@@ -86,7 +86,40 @@ INSERT INTO `audit` (`id`, `userID`, `action`, `date`) VALUES
 (24, 1, 'Archived a Assessment to a Lesson in the Class', '2019-10-22 11:16:25'),
 (25, 1, 'Activated a Assessment to a Lesson in the Class', '2019-10-22 11:17:22'),
 (26, 1, 'Archived a Assessment to a Lesson in the Class', '2019-10-22 11:17:25'),
-(27, 1, 'Activated a Assessment to a Lesson in the Class', '2019-10-22 11:17:29');
+(27, 1, 'Activated a Assessment to a Lesson in the Class', '2019-10-22 11:17:29'),
+(28, 1, 'Added Choices to a Assessment Question to a Lesson in the Class', '2019-10-22 19:09:28'),
+(29, 1, 'Added Choices to a Assessment Question to a Lesson in the Class', '2019-10-22 19:16:17'),
+(30, 1, 'Added Choices to a Assessment Question to a Lesson in the Class', '2019-10-22 19:19:58'),
+(31, 1, 'Added Choices to a Assessment Question to a Lesson in the Class', '2019-10-22 19:20:55'),
+(32, 1, 'Archived a Choice for the Assessment to a Lesson in the Class', '2019-10-22 19:22:50'),
+(33, 1, 'Activated a Choice for the Assessment to a Lesson in the Class', '2019-10-22 19:24:30'),
+(34, 1, 'Activated a Choice for the Assessment to a Lesson in the Class', '2019-10-22 19:24:46'),
+(35, 1, 'Archived a Choice for the Assessment to a Lesson in the Class', '2019-10-22 19:25:09'),
+(36, 1, 'Activated a Choice for the Assessment to a Lesson in the Class', '2019-10-22 19:25:13');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `choices`
+--
+
+CREATE TABLE `choices` (
+  `id` int(11) NOT NULL,
+  `assessmentID` int(11) NOT NULL COMMENT 'foreign key from assessment table',
+  `choice` varchar(100) NOT NULL,
+  `correct` int(11) NOT NULL COMMENT '0 - not correct, 1 - correct',
+  `status` int(11) NOT NULL COMMENT '0- archived, 1 - active'
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `choices`
+--
+
+INSERT INTO `choices` (`id`, `assessmentID`, `choice`, `correct`, `status`) VALUES
+(1, 1, '3', 1, 1),
+(2, 1, '2', 0, 1),
+(3, 1, '12', 0, 1),
+(4, 1, '13', 0, 1);
 
 -- --------------------------------------------------------
 
@@ -163,7 +196,7 @@ CREATE TABLE `resources` (
   `file` text NOT NULL,
   `type` varchar(5) NOT NULL,
   `status` int(11) NOT NULL COMMENT '0 - archived, 1 - active',
-  `date_added` datetime NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp()
+  `date_added` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
@@ -261,6 +294,12 @@ ALTER TABLE `audit`
   ADD PRIMARY KEY (`id`);
 
 --
+-- Indexes for table `choices`
+--
+ALTER TABLE `choices`
+  ADD PRIMARY KEY (`id`);
+
+--
 -- Indexes for table `class`
 --
 ALTER TABLE `class`
@@ -310,7 +349,13 @@ ALTER TABLE `assessment`
 -- AUTO_INCREMENT for table `audit`
 --
 ALTER TABLE `audit`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=28;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=37;
+
+--
+-- AUTO_INCREMENT for table `choices`
+--
+ALTER TABLE `choices`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- AUTO_INCREMENT for table `class`
